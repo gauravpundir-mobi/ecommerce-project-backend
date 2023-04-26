@@ -19,6 +19,10 @@ module.exports = (sequelize,Sequelize) =>{
         description : {
             type : Sequelize.STRING,
             allownull : false
+        },
+        rating:{
+            type : Sequelize.INTEGER,
+            allownull : false
         }
     })
     return Product;
