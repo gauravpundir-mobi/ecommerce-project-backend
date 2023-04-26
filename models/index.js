@@ -30,5 +30,10 @@ db.Sequelize = Sequelize;
 
 db.user = require("./user")(sequelize,Sequelize)
 db.product = require("./product")(sequelize,Sequelize)
+db.cart = require("./cart")(sequelize,Sequelize);
+
+//---------------Association between models ---------------
+db.user.hasMany(db.cart,{foreignKey:"userId"});
+db.cart.belongsTo(db.product,{foreignKey:"productId"})
 
 module.exports = db;

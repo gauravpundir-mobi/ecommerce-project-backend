@@ -1,6 +1,8 @@
 const db = require("../models");
 const User = db.user
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+const config = require("../config/server.config")
 
 exports.signup = async(req,res) =>{
 
@@ -41,11 +43,13 @@ exports.signin = async (req,res) =>{
     if(user){
         const validPassword = bcrypt.compareSync(password,user.password)
         if(validPassword){
+            const token = jwt.sign({id:user.userId},config.SECRET,{expiresIn:6000})
             const response = {
                 userId : user.userId,
                 name  : user.name,
                 email : user.email,
-                phoneNo: user.phoneNo
+                phoneNo: user.phoneNo,
+                accessToken : token
             }
             return res.status(200).send(response)
         }else{
